@@ -10,7 +10,8 @@ export const formatDateToIndian = (date) => {
 };
 
 export const formatDateToISO = (date) => {
-  return new Date(date).toISOString().split('T')[0];
+  const dateObject = new Date(date);
+  return dateObject.toISOString().split('T')[0];
 };
 
 export const getPagination = (limit, page, totalEntries) => {
