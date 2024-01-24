@@ -100,39 +100,83 @@ export const updateAbout = async (id, formData) => {
   const { photo, title, short_description, full_description } =
     Object.fromEntries(formData);
 
-  try {
-    connectToDb();
-    const webData = await WebData.findById(id);
-    if (!webData) {
-      console.log("About not found");
-      return false;
-    }
-
-    console.log("first: ", photo);
-    let newPath;
-    if (photo && photo.size > 0) {
-      newPath = await uploadFiles(photo);
-
-      if (newPath && webData.about.photo && webData.about.photo.public_id) {
-        await deleteFile(webData.about.photo.public_id);
-      }
-    }
-
-    webData.about.photo = newPath || webData.about.photo;
-    webData.about.title = title;
-    webData.about.short_description = short_description;
-    webData.about.full_description = full_description;
-
-    const updatedWebData = await webData.save();
-
-    if (updatedWebData) {
-      revalidatePath("/admin/about");
-      return true;
-    }
-  } catch (error) {
-    console.log("error", error);
+  // try {
+  connectToDb();
+  const webData = await WebData.findById(id);
+  if (!webData) {
+    console.log("About not found");
     return false;
   }
+
+  let newPath;
+  if (photo && photo.size > 0) {
+    newPath = await uploadFiles(photo);
+
+    if (newPath && webData.about.photo && webData.about.photo.public_id) {
+      await deleteFile(webData.about.photo.public_id);
+    }
+  }
+
+  webData.about.photo = newPath || webData.about.photo;
+  webData.about.title = title;
+  webData.about.short_description = short_description;
+  webData.about.full_description = full_description;
+
+  const updatedWebData = await webData.save();
+
+  if (updatedWebData) {
+    revalidatePath("/admin/about");
+    redirect("/admin/about");
+  }
+  // } catch (error) {
+  //   console.log("error", error);
+  // }
+};
+
+export const updateContact = async (id, formData) => {
+  const {
+    shopname,
+    shop_description,
+    mobile,
+    mobile2,
+    whatsapp,
+    whatsapp2,
+    address,
+    email,
+    twitter,
+    facebook,
+    instagram,
+    map,
+  } = Object.fromEntries(formData);
+
+  // try {
+  connectToDb();
+  const webData = await WebData.findById(id);
+  if (!webData) {
+    console.log("Contact not found");
+    return false;
+  }
+
+  webData.contact.shop_name = shopname;
+  webData.contact.shop_description = shop_description;
+  webData.contact.phone = [mobile, mobile2];
+  webData.contact.whatsapp = [whatsapp, whatsapp2];
+  webData.contact.email = email;
+  webData.contact.address = address;
+  webData.contact.social.facebook = facebook;
+  webData.contact.social.instagram = instagram;
+  webData.contact.social.twitter = twitter;
+  webData.contact.map = map;
+
+  const updatedWebData = await webData.save();
+
+  if (updatedWebData) {
+    revalidatePath("/admin/contact");
+    redirect("/admin/contact");
+  }
+  // } catch (error) {
+  //   console.log("error", error);
+  // }
 };
 
 export const updateSubcategory = async (id, formData) => {

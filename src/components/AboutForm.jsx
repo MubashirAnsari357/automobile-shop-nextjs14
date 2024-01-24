@@ -4,8 +4,8 @@ import { AddIcon } from "./icons";
 import Image from "next/image";
 import { updateAbout } from "@/lib/Actions/actions";
 
-const AboutForm = ({setIsOpen, webData}) => {
-  const [file, setFile] = useState(webData.about.photo.url);
+const AboutForm = ({edit, about, id}) => {
+  const [file, setFile] = useState(about?.photo?.url || null);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -15,15 +15,10 @@ const AboutForm = ({setIsOpen, webData}) => {
     }
   };
 
-  const handleSubmit = async (id, formData) => {
-    const res = await updateAbout(id, formData);
-    if (res) {
-      setIsOpen(false);
-    }
-  };
+  const handleEdit = updateAbout.bind(null, id);
 
   return (
-    <form action={handleSubmit.bind(null, webData._id)} className="p-4 md:p-5">
+    <form action={handleEdit} className="p-4 md:p-5">
       <div className="grid gap-4 mb-4 grid-cols-2">
         <div className="col-span-2">
           <label htmlFor="name" className="formLabel">
@@ -33,7 +28,7 @@ const AboutForm = ({setIsOpen, webData}) => {
             type="text"
             name="title"
             id="title"
-            defaultValue={webData.about.title}
+            defaultValue={about?.title || ''}
             className="formInput"
             placeholder="About Title"
             required
@@ -49,7 +44,7 @@ const AboutForm = ({setIsOpen, webData}) => {
             rows={3}
             className="formInput"
             placeholder="Write short description here"
-            defaultValue={webData.about.short_description}
+            defaultValue={about?.short_description || ''}
           />
         </div>
         <div className="col-span-2">
@@ -62,7 +57,7 @@ const AboutForm = ({setIsOpen, webData}) => {
             rows={6}
             className="formInput"
             placeholder="Write full description here"
-            defaultValue={webData.about.full_description}
+            defaultValue={about?.full_description || ''}
           />
         </div>
         <div className="col-span-2">
@@ -71,8 +66,8 @@ const AboutForm = ({setIsOpen, webData}) => {
               <Image
                 width={"80"}
                 height={"80"}
-                src={file}
-                alt={file?.name}
+                src={file || URL.createObjectURL(file)}
+                alt={file?.name || ''}
                 className="h-20 w-20 object-cover mb-2 rounded-md cursor-pointer"
               />
             )}

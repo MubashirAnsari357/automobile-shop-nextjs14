@@ -12,7 +12,9 @@ const About = async () => {
         <div className="overflow-x-auto bg-white rounded shadow">
           <div className="flex items-center justify-between border-b border-gray-300 px-6 py-4 pb-4">
             <h2 className="text-xl font-medium ">About</h2>
-            {/* Edit Button */}
+            <Link href={"/admin/about/edit"} className="primary-btn">
+                Edit About
+              </Link>
           </div>
           <div className="flex items-center font-poppins">
             <div className="justify-center flex-1 mx-auto p-6">
@@ -34,10 +36,10 @@ const About = async () => {
               <div className="flex flex-wrap items-center">
                 <div className="w-full px-4 mb-10 md:w-1/2 lg:mb-0 ">
                   <h2 className="mb-4 text-2xl font-bold text-gray-700">
-                    {webData[0]?.about?.title}
+                    {webData?.about?.title}
                   </h2>
                   <p className="mb-4 text-base leading-7 text-gray-500">
-                    {webData[0]?.about?.short_description}
+                    {webData?.about?.short_description}
                   </p>
                   <Link
                     href={"/admin/contact"}
@@ -50,7 +52,7 @@ const About = async () => {
                   <div className="relative md:h-96 h-44 w-full rounded-lg">
                     <Image
                       fill
-                      src={webData[0]?.about?.photo?.url}
+                      src={webData?.about?.photo?.url}
                       alt=""
                       className="z-40 object-cover rounded-lg"
                     />
@@ -58,7 +60,7 @@ const About = async () => {
                   <AboutImageDecoration />
                 </div>
                 <p className="mb-4 text-base leading-7 text-gray-500 px-4 py-10">
-                  {webData[0]?.about?.full_description}
+                  {webData?.about?.full_description}
                 </p>
               </div>
             </div>

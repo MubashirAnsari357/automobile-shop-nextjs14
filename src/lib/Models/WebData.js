@@ -12,7 +12,7 @@ const WebDataSchema = new mongoose.Schema({
   },
   contact: {
     shop_name: String,
-    short_description: String,
+    shop_description: String,
     phone: [{ type: String }],
     whatsapp: [{ type: String }],
     email: String,

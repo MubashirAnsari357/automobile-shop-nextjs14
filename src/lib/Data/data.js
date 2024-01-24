@@ -113,7 +113,7 @@ export const getSubCategories = async (query, limit, page) => {
 export const getWebData = async () => {
   try {
     connectToDb();
-    const webData = await WebData.find();
+    const webData = await WebData.findOne();
     return webData;
   } catch (error) {
     console.log(error);

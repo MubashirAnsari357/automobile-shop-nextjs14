@@ -22,10 +22,10 @@ services:
           action: sync
   
     environment:
-      MONGO_URI: mongodb+srv://mubashirAnsari:m%4099775533m@mubashiransari.spkbbpy.mongodb.net/automobile?retryWrites=true&w=majority
-      NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: dxo4gxrk9
-      NEXT_PUBLIC_CLOUDINARY_API_KEY: 112928591398883
-      CLOUDINARY_API_SECRET: UO5OQaY5MvhE5xdBgpInRCEr3Io 
+      MONGO_URI: process.env.MONGO_URI
+      NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+      NEXT_PUBLIC_CLOUDINARY_API_KEY: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY
+      CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET 
 
 volumes:
   tasked:
