@@ -1,5 +1,4 @@
 import ProductForm from "@/components/ProductForm";
-import Test from "@/components/Test";
 import {
   getCategories,
   getProductyById,

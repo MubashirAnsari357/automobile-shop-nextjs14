@@ -1,13 +1,12 @@
 import PageNavigation from "@/components/PageNavigation";
 import ShowPerPage from "@/components/ShowPerPage";
 import { DeleteIcon, EditIcon } from "@/components/icons";
-import { getCategories, getProducts, getSubCategories } from "@/lib/Data/data";
+import { getProducts} from "@/lib/Data/data";
 import { formatDateToIndian } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Search from "@/components/Search";
-import CategoryDropdown from "@/components/CategoryDropdown";
 
 const Products = async ({ searchParams }) => {
   const search = searchParams.q ?? "";
