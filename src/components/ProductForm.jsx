@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { AddIcon, CloudArrowIcon } from "./icons";
+import { AddIcon } from "./icons";
 import Image from "next/image";
 import { addProduct, updateProduct } from "@/lib/Actions/actions";
 import { formatDateToISO } from "@/lib/utils";
@@ -18,7 +18,8 @@ const ProductForm = ({ edit, product, categories, subcategories }) => {
         (subcategory) => subcategory.category._id === selectedCategory
       )
     );
-  }, [selectedCategory]);
+  }, [subcategories, selectedCategory]);
+
 
   const handleSelect = (event) => {
     setSelectedCategory(event.target.value);
@@ -103,7 +104,7 @@ const ProductForm = ({ edit, product, categories, subcategories }) => {
             className="formInput"
             placeholder="Select Manufacture Date"
             required
-            defaultValue={formatDateToISO(product?.manufactureDate) || ""}
+            defaultValue={product?.manufactureDate ? formatDateToISO(product?.manufactureDate) : ""}
           />
         </div>
         <div className="col-span-2">
