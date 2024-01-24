@@ -24,6 +24,11 @@ const SidebarLinks = () => {
       icon: <CategoryIcon />,
     },
     {
+      title: "SubCategories",
+      path: "/admin/subcategories",
+      icon: <CategoryIcon />,
+    },
+    {
       title: "Products",
       path: "/admin/products",
       icon: <ProductIcon />,

@@ -13,8 +13,8 @@ import "../globals.css";
 import { Navigation, Pagination } from "swiper/modules";
 import { products } from "../MockData";
 
-export default function Home() {
 
+export default function Home() {
   return (
     <div className="min-h-screen">
       <Hero />

@@ -1,12 +1,15 @@
+"use server";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { DeleteIcon, EditIcon } from "./icons";
 import Modal from "./Modal";
-import ModalWrapper from "./ModalWrapper";
 
-const Table = ({ title, data }) => {
-  const columns = data.length > 0 ? Object.keys(data[0]) : [];
+const Table = ({ title, btnTitle, data, otherData }) => {
+  const excludedFields = ["_id", "createdAt", "updatedAt", "__v", "password"];
+  const columns = data?.length > 0
+  ? Object.keys(data[0]).filter(column => !excludedFields.includes(column))
+  : [];
   return (
     <>
       <section className="items-center lg:flex font-poppins">
@@ -15,7 +18,7 @@ const Table = ({ title, data }) => {
             <div className="">
               <div className="flex items-center justify-between border-b border-gray-300 px-6 py-4 pb-4">
                 <h2 className="text-xl font-medium ">{title}</h2>
-                <ModalWrapper btnTitle={title}/>
+                <Modal btnTitle={btnTitle} otherData={otherData && otherData}/>
               </div>
               <div className="flex flex-wrap items-center justify-between px-4 py-2 border-b">
                 <div className="flex items-center pl-3">
@@ -60,6 +63,7 @@ const Table = ({ title, data }) => {
               <table className="w-full table-auto">
                 <thead className="bg-gray-100 ">
                   <tr className="text-xs text-left text-gray-500 border-b border-gray-200 ">
+                  <th className="px-6 py-3 font-medium ">Sr. No</th>
                     {columns.map((column) => (
                       <th key={column} className="px-6 py-3 font-medium">
                         {column.charAt(0).toUpperCase() + column.slice(1)}
@@ -69,9 +73,12 @@ const Table = ({ title, data }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((item, index) => (
+                  {data?.map((item, index) => (
                     <tr key={index} className="border-b border-gray-200">
-                      {columns.map((column) => (
+                      <td className="px-6 py-3 text-sm font-medium">
+                        {index+1}
+                      </td>
+                      {columns.map((column, index) => (
                         <td
                           key={column}
                           className="px-6 py-3 text-sm font-medium"
@@ -85,7 +92,7 @@ const Table = ({ title, data }) => {
                               className="md:w-16 md:h-16 h-10 w-10 object-cover rounded-lg"
                             />
                           ) : (
-                            item[column]
+                            item[column] 
                           )}
                         </td>
                       ))}

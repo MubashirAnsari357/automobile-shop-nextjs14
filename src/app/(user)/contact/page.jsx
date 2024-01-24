@@ -101,7 +101,7 @@ export default function Contact() {
               <div>
                 <button
                   type="submit"
-                  className="w-full rounded-md bg-slate-900 p-3 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
+                  className="primary-btn w-full"
                 >
                   Send Message
                 </button>

@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    
+    ports:
+      - 3000:3000
+    
+    develop:
+      watch:
+        - path: ./package.json
+          action: rebuild
+        - path: ./next.config.js
+          action: rebuild
+        - path: ./package-lock.json
+          action: rebuild
+        - path: .
+          target: /app
+          action: sync
+  
+    environment:
+      MONGO_URI: mongodb+srv://mubashirAnsari:m%4099775533m@mubashiransari.spkbbpy.mongodb.net/automobile?retryWrites=true&w=majority
+      NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: dxo4gxrk9
+      NEXT_PUBLIC_CLOUDINARY_API_KEY: 112928591398883
+      CLOUDINARY_API_SECRET: UO5OQaY5MvhE5xdBgpInRCEr3Io 
+
+volumes:
+  tasked:

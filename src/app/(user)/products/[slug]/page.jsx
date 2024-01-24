@@ -1,14 +1,21 @@
 "use client";
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import {
+  EffectCards,
+  EffectCreative,
+  FreeMode,
+  Navigation,
+  Thumbs,
+} from "swiper/modules";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
-
+// import "./styles.module.css";
+import Image from "next/image";
 
 export default function Page({ params: { slug } }) {
   const [show, setShow] = useState(false);
@@ -17,86 +24,78 @@ export default function Page({ params: { slug } }) {
 
   return (
     <div className="lg:flex items-start justify-center py-12 2xl:px-20 md:px-6 px-4">
-      <div className="max-w-md justify-center mx-auto lg:mx-0">
-        <Swiper
-          spaceBetween={10}
-          navigation={true}
-          thumbs={{ swiper: thumbsSwiper }}
-          modules={[FreeMode, Navigation, Thumbs]}
-          className="mySwiper2"
-        >
-          <SwiperSlide
-          >
-            <img
-              className="w-full block h-full object-cover"
-              alt="img of a girl posing"
-              src="https://i.ibb.co/QMdWfzX/component-image-one.png"
-            />
-          </SwiperSlide>
-          <SwiperSlide
-          >
-            <img
-              className="w-full block h-full object-cover"
-              alt="img of a girl posing"
-              src="https://i.ibb.co/qxkRXSq/component-image-two.png"
-            />
-          </SwiperSlide>
-        </Swiper>
+      <div className="max-w-xl justify-center mx-auto lg:mx-0">
           <Swiper
-            onSwiper={setThumbsSwiper}
-            spaceBetween={10}
-            slidesPerView={4}
-            freeMode={true}
-            watchSlidesProgress={true}
-            modules={[FreeMode, Navigation, Thumbs]}
-            className="mySwiper"
+            grabCursor={true}
+            effect={"creative"}
+            creativeEffect={{
+              prev: {
+                shadow: true,
+                translate: [0, 0, -400],
+              },
+              next: {
+                translate: ["100%", 0, 0],
+              },
+            }}
+            modules={[EffectCreative]}
+            className="md:w-[500px] md:h-[500px] sm:h-96 sm:w-96 h-80 w-80"
           >
-            <SwiperSlide
-            >
-              <img
-                className="w-full block h-full object-cover"
-                alt="img of a girl posing"
-                src="https://i.ibb.co/QMdWfzX/component-image-one.png"
-              />
+            <SwiperSlide>
+              <div className="bg-cover rounded-3xl">
+                <Image
+                  fill
+                  className="h-full w-full object-cover rounded-2xl"
+                  src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60?a=b"
+                  alt="img"
+                />
+              </div>
             </SwiperSlide>
-            <SwiperSlide
-            >
-              <img
-                alt="img-tag-one"
-                className="w-full block h-full object-cover"
-                src="https://i.ibb.co/cYDrVGh/Rectangle-245.png"
-              />
+            <SwiperSlide>
+              <div className="h-44 w-44 bg-cover">
+                <Image
+                  fill
+                  className="h-44 w-44 object-cover"
+                  src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60?a=b"
+                  alt="img"
+                />
+              </div>
             </SwiperSlide>
-            <SwiperSlide
-            >
-              <img
-                alt="img-tag-one"
-                className="w-full"
-                src="https://i.ibb.co/f17NXrW/Rectangle-244.png"
-              />
+            <SwiperSlide>
+              <div className="h-44 w-44 bg-cover">
+                <Image
+                  fill
+                  className="h-full w-full object-cover"
+                  src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60?a=b"
+                  alt="img"
+                />
+              </div>
             </SwiperSlide>
-            <SwiperSlide
-            >
-              <img
-                alt="img-tag-one"
-                className="w-full"
-                src="https://i.ibb.co/cYDrVGh/Rectangle-245.png"
-              />
+            <SwiperSlide>
+              <div className="h-44 w-44 bg-cover">
+                <Image
+                  fill
+                  className="h-44 w-44 object-cover"
+                  src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60?a=b"
+                  alt="img"
+                />
+              </div>
             </SwiperSlide>
-            <SwiperSlide
-            >
-              <img
-                alt="img-tag-one"
-                className="w-full"
-                src="https://i.ibb.co/f17NXrW/Rectangle-244.png"
-              />
+            <SwiperSlide>
+              <div className="h-44 w-44 bg-cover">
+                <Image
+                  fill
+                  className="h-full w-full object-cover"
+                  src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60?a=b"
+                  alt="img"
+                />
+              </div>
             </SwiperSlide>
           </Swiper>
       </div>
-      <div className="xl:w-2/5 lg:ml-8 md:ml-6 md:mt-0 mt-6">
+      <div className="xl:w-2/5 lg:ml-8 md:ml-6 lg:mt-0 mt-6">
         <div className="border-b border-gray-200 pb-6">
           <p className="text-sm leading-none text-gray-600">
-            Balenciaga Fall Collection
+            Balenciaga Fall Collection Test
           </p>
           <h1
             className="lg:text-2xl
