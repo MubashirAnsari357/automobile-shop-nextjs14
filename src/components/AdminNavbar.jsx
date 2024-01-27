@@ -11,6 +11,7 @@ import {
   SignOutIcon,
 } from "./icons";
 import SidebarLinks from "./SidebarLinks";
+import Link from "next/link";
 
 export default function AdminNavbar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -53,7 +54,7 @@ export default function AdminNavbar() {
                   ></path>
                 </svg>
               </button>
-              <a href="https://flowbite.com" className="flex ms-2 md:me-24">
+              <Link href="/admin/dashboard" className="flex ms-2 md:me-24">
                 <Image
                   width={8}
                   height={8}
@@ -64,7 +65,7 @@ export default function AdminNavbar() {
                 <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap">
                   Automobile
                 </span>
-              </a>
+              </Link>
             </div>
             <div className="flex items-center">
               <div className="flex items-center ms-3">
@@ -94,13 +95,13 @@ export default function AdminNavbar() {
                 >
                   <div className="px-4 py-3" role="none">
                     <p className="text-sm text-gray-900" role="none">
-                      Neil Sims
+                      Admin
                     </p>
                     <p
                       className="text-sm font-medium text-gray-900 truncate"
                       role="none"
                     >
-                      neil.sims@flowbite.com
+                      testing@test.com
                     </p>
                   </div>
                   <ul className="py-1" role="none">

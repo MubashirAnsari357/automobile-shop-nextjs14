@@ -1,54 +1,14 @@
 import { usePathname } from "next/navigation";
 import React from "react";
-import {
-  AboutIcon,
-  CategoryIcon,
-  ContactIcon,
-  DashboardIcon,
-  InboxIcon,
-  ProductIcon,
-  SignOutIcon,
-} from "./icons";
+import { SignOutIcon } from "./icons";
 import Link from "next/link";
+import { AdminLinks } from "@/constants/Links";
 
 const SidebarLinks = () => {
-  const links = [
-    {
-      title: "Dashboard",
-      path: "/admin/dashboard",
-      icon: <DashboardIcon />,
-    },
-    {
-      title: "Categories",
-      path: "/admin/categories",
-      icon: <CategoryIcon />,
-    },
-    {
-      title: "SubCategories",
-      path: "/admin/subcategories",
-      icon: <CategoryIcon />,
-    },
-    {
-      title: "Products",
-      path: "/admin/products",
-      icon: <ProductIcon />,
-    },
-    {
-      title: "About",
-      path: "/admin/about",
-      icon: <AboutIcon />,
-    },
-    {
-      title: "Contact",
-      path: "/admin/contact",
-      icon: <ContactIcon />,
-    },
-  ];
-
   const pathname = usePathname();
   return (
     <ul className="space-y-2 font-medium">
-      {links.map((link) => (
+      {AdminLinks.map((link) => (
         <li key={link.path}>
           <Link
             href={link.path}

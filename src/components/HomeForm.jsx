@@ -2,10 +2,10 @@
 import React, { useState } from "react";
 import { AddIcon } from "./icons";
 import Image from "next/image";
-import { updateAbout } from "@/lib/Actions/actions";
+import { updateHome } from "@/lib/Actions/actions";
 
-const AboutForm = ({edit, about, id}) => {
-  const [file, setFile] = useState(about?.photo?.url || null);
+const HomeForm = ({edit, home, id}) => {
+  const [file, setFile] = useState(home?.photo?.url || null);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -15,49 +15,23 @@ const AboutForm = ({edit, about, id}) => {
     }
   };
 
-  const handleEdit = updateAbout.bind(null, id);
+  const handleEdit = updateHome.bind(null, id);
 
   return (
     <form action={handleEdit} className="p-4 md:p-5">
       <div className="grid gap-4 mb-4 grid-cols-2">
         <div className="col-span-2">
           <label htmlFor="title" className="formLabel">
-            Title
+            Overlay Text
           </label>
           <input
             type="text"
             name="title"
             id="title"
-            defaultValue={about?.title || ''}
+            defaultValue={home?.overlayText || ''}
             className="formInput"
-            placeholder="About Title"
+            placeholder="Text to be shown over image"
             required
-          />
-        </div>
-        <div className="col-span-2">
-          <label htmlFor="short_description" className="formLabel">
-            Short Description
-          </label>
-          <textarea
-            id="short_description"
-            name="short_description"
-            rows={3}
-            className="formInput"
-            placeholder="Write short description here"
-            defaultValue={about?.short_description || ''}
-          />
-        </div>
-        <div className="col-span-2">
-          <label htmlFor="full_description" className="formLabel">
-            Long Description
-          </label>
-          <textarea
-            id="full_description"
-            name="full_description"
-            rows={6}
-            className="formInput"
-            placeholder="Write full description here"
-            defaultValue={about?.full_description || ''}
           />
         </div>
         <div className="col-span-2">
@@ -91,10 +65,10 @@ const AboutForm = ({edit, about, id}) => {
       </div>
       <button type="submit" className="primary-btn w-full">
         <AddIcon className="me-1 -ms-1 w-5 h-5" />
-        Update About
+        Update Home
       </button>
     </form>
   );
 };
 
-export default AboutForm;
+export default HomeForm;

@@ -8,7 +8,7 @@ import SubCategory from "../Models/SubCategory";
 import WebData from "../Models/WebData";
 import { redirect } from "next/navigation";
 
-export const addProduct = async (files, formData) => {
+export const addProduct = async (formData) => {
   const allPhotos = Array.from(formData.entries())
     .filter(([name]) => name === "photos")
     .flatMap(([, files]) => files);
@@ -18,11 +18,11 @@ export const addProduct = async (files, formData) => {
 
   const urls = [];
 
-  for (const photo of files) {
+  for (const photo of allPhotos) {
     const path = await uploadFiles(photo);
     urls.push(path);
   }
-  try {
+  // try {
     const product = await Product.create({
       name,
       category,
@@ -36,9 +36,9 @@ export const addProduct = async (files, formData) => {
       revalidatePath("/admin/products");
       redirect("/admin/products");
     }
-  } catch (error) {
-    console.log("error", error);
-  }
+  // } catch (error) {
+  //   console.log("error", error);
+  // }
 };
 
 export const addCategory = async (formData) => {
@@ -127,6 +127,41 @@ export const updateAbout = async (id, formData) => {
   if (updatedWebData) {
     revalidatePath("/admin/about");
     redirect("/admin/about");
+  }
+  // } catch (error) {
+  //   console.log("error", error);
+  // }
+};
+
+export const updateHome = async (id, formData) => {
+  const { photo, title } =
+    Object.fromEntries(formData);
+
+  // try {
+  connectToDb();
+  const webData = await WebData.findById(id);
+  if (!webData) {
+    console.log("Home not found");
+    return false;
+  }
+
+  let newPath;
+  if (photo && photo.size > 0) {
+    newPath = await uploadFiles(photo);
+
+    if (newPath && webData.homepage.photo && webData.homepage.photo.public_id) {
+      await deleteFile(webData.home.photo.public_id);
+    }
+  }
+
+  webData.homepage.photo = newPath || webData.homepage.photo;
+  webData.homepage.overlayText = title;
+
+  const updatedWebData = await webData.save();
+
+  if (updatedWebData) {
+    revalidatePath("/admin/dashboard");
+    redirect("/admin/dashboard");
   }
   // } catch (error) {
   //   console.log("error", error);

@@ -1,12 +1,19 @@
 import ContactFormDecoration from "@/components/ContactFormDecoration";
 import ContactUsForm from "@/components/ContactUsForm";
 import Map from "@/components/Map";
-import { EmailIcon, HomeIcon, PhoneIcon } from "@/components/icons";
+import {
+  EmailIcon,
+  HomeIcon,
+  PhoneIcon,
+  WhatsappIcon,
+} from "@/components/icons";
+import { getWebData } from "@/lib/Data/data";
 
-export default function Contact() {
+const Contact = async () => {
+  const webData = await getWebData();
   return (
     <section className="relative z-10 overflow-hidden bg-white">
-      <div className="-mx-4 flex flex-wrap lg:justify-between lg:p-20 p-6">
+      <div className="-mx-4 flex flex-wrap lg:justify-between p-6 lg:p-20">
         <div className="w-full px-4 lg:w-1/2 xl:w-6/12">
           <div className="mb-12 max-w-[570px] lg:mb-0">
             <span className="mb-4 block text-base font-semibold">
@@ -16,9 +23,7 @@ export default function Contact() {
               GET IN TOUCH WITH US
             </h2>
             <p className="mb-9 text-base leading-relaxed text-body-color dark:text-dark-6">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eius tempor incididunt ut labore e dolore magna aliqua. Ut enim
-              adiqua minim veniam quis nostrud exercitation ullamco
+              {webData?.contact?.shop_description}
             </p>
             <div className="mb-8 flex w-full max-w-[370px]">
               <div className="mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded bg-blue-800/5 text-primary sm:h-[70px] sm:max-w-[70px]">
@@ -27,7 +32,7 @@ export default function Contact() {
               <div className="w-full">
                 <h4 className="mb-1 text-xl font-bold">Our Location</h4>
                 <p className="text-base text-body-color dark:text-dark-6">
-                  99 S.t Jomblo Park Pekanbaru 28292. Indonesia
+                  {webData?.contact?.address}
                 </p>
               </div>
             </div>
@@ -38,9 +43,29 @@ export default function Contact() {
               </div>
               <div className="w-full">
                 <h4 className="mb-1 text-xl font-bold">Phone Number</h4>
-                <p className="text-base text-body-color dark:text-dark-6">
-                  (+62)81 414 257 9980
-                </p>
+                {webData?.contact?.phone?.map((mobile, index) => (
+                  <a href={`tel:${mobile}`} key={index}>
+                    <p className="text-base">+91 {mobile}</p>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div className="mb-8 flex w-full max-w-[370px]">
+              <div className="mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded bg-blue-800/5 text-primary sm:h-[70px] sm:max-w-[70px]">
+                <WhatsappIcon className="h-8 w-8" />
+              </div>
+              <div className="w-full">
+                <h4 className="mb-1 text-xl font-bold">Whatsapp</h4>
+                {webData?.contact?.whatsapp?.map((mobile, index) => (
+                  <a
+                    href={`https://wa.me/${mobile}`}
+                    key={index}
+                    target="_blank"
+                  >
+                    <p className="text-base">+91 {mobile}</p>
+                  </a>
+                ))}
               </div>
             </div>
 
@@ -50,23 +75,23 @@ export default function Contact() {
               </div>
               <div className="w-full">
                 <h4 className="mb-1 text-xl font-bold">Email Address</h4>
-                <p className="text-base">info@yourdomain.com</p>
+                <a href={`mailto:${webData?.contact?.email}`} target="_blank">
+                  <p className="text-base">{webData?.contact?.email}</p>
+                </a>
               </div>
             </div>
           </div>
         </div>
-        <div className="w-full px-4 lg:w-1/2 xl:w-5/12">
+        <div className="w-full px-4 py-8 lg:w-1/2 xl:w-5/12">
           <div className="relative rounded-lg bg-white p-8 shadow-lg sm:p-12">
             <ContactUsForm />
             <ContactFormDecoration />
           </div>
         </div>
       </div>
-      <Map
-        link={
-          "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3624.1037649366026!2d72.62315047525782!3d23.026887079170685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e8773ff7c6c23%3A0xec720bf7d9b79208!2sMubashshir%20Shahabuddin%20Ansari!5e1!3m2!1sen!2sin!4v1703860140149!5m2!1sen!2sin"
-        }
-      />
+      <Map link={webData?.contact?.map} />
     </section>
   );
-}
+};
+
+export default Contact;
