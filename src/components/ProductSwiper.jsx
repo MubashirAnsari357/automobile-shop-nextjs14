@@ -5,7 +5,7 @@ import ProductCard from "./ProductCard";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import "@/app/globals.css";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 
@@ -37,7 +37,7 @@ const ProductSwiper = ({ products }) => {
     >
       {products.map((product) => (
         <SwiperSlide
-          key={product.id}
+          key={product._id}
           className="flex justify-center items-center"
         >
           <ProductCard

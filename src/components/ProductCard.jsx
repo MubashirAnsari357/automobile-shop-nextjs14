@@ -10,11 +10,10 @@ export default function ProductCard({
   description,
   manufactureDate,
 }) {
-  console.log(photo)
   return (
     <div
       href={""}
-      className="mb-10 mt-4 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md"
+      className="mb-10 mt-4 mx-auto flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md"
     >
       <div className="relative flex h-60 overflow-hidden rounded-t-lg">
         <Image

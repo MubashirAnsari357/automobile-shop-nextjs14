@@ -9,7 +9,7 @@ const Home = async () => {
   return (
     <div className="min-h-screen">
       <Hero image={webData.homepage.photo.url} overlayText={webData.homepage.overlayText} />
-      <div className="p-4 flex justify-center items-center mx-auto">
+      <div className="p-4">
         <ProductSwiper products={JSON.parse(JSON.stringify(productsData?.products))}/>
       </div>
     </div>
