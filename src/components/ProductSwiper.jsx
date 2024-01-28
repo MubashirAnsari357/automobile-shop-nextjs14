@@ -8,6 +8,7 @@ import "swiper/css/navigation";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
+import { HomeIcon, HoverPlayIcon } from "./icons";
 
 const ProductSwiper = ({ products }) => {
   return (
@@ -41,7 +42,7 @@ const ProductSwiper = ({ products }) => {
           className="flex justify-center items-center"
         >
           <ProductCard
-            key={product._id}
+            id={product._id}
             photo={product.photos[0].url}
             name={product.name}
             description={product.description}

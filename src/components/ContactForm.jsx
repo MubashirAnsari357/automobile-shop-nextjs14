@@ -1,6 +1,6 @@
 import React from "react";
-import { AddIcon } from "./icons";
 import { updateContact } from "@/lib/Actions/actions";
+import SubmitButton from "./SubmitButton";
 
 const ContactForm = ({ edit, contact, id }) => {
   const handleEdit = updateContact.bind(null, id);
@@ -179,10 +179,7 @@ const ContactForm = ({ edit, contact, id }) => {
           />
         </div>
       </div>
-      <button type="submit" className="primary-btn w-full">
-        <AddIcon className="me-1 -ms-1 w-5 h-5" />
-        Update Contact
-      </button>
+      <SubmitButton edit={edit} title={'Contact'} />
     </form>
   );
 };

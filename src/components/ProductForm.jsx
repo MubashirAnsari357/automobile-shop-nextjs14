@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { AddIcon } from "./icons";
 import Image from "next/image";
 import { addProduct, updateProduct } from "@/lib/Actions/actions";
 import { formatDateToISO } from "@/lib/utils";
+import SubmitButton from "./SubmitButton";
 
 const ProductForm = ({ edit, product, categories, subcategories }) => {
   const [files, setFiles] = useState(product?.photos || []);
@@ -156,10 +156,7 @@ const ProductForm = ({ edit, product, categories, subcategories }) => {
           
         </div> */}
       </div>
-      <button type="submit" className="primary-btn w-full">
-        <AddIcon className="me-1 -ms-1 w-5 h-5" />
-        {edit ? 'Update' : 'Add new'} product
-      </button>
+      <SubmitButton edit={edit} title={'Product'} />
     </form>
   );
 };

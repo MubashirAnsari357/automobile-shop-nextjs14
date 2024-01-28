@@ -1,6 +1,7 @@
 import React from 'react'
 import { AddIcon } from './icons'
 import { addCategory, updateCategory } from '@/lib/Actions/actions'
+import SubmitButton from './SubmitButton'
 
 const CategoryForm = ({edit, category}) => {
   const handleEdit = updateCategory.bind(null, category?._id)
@@ -22,10 +23,7 @@ const CategoryForm = ({edit, category}) => {
           />
         </div>
       </div>
-      <button type="submit" className="primary-btn w-full">
-        <AddIcon className="me-1 -ms-1 w-5 h-5" />
-        {edit ? 'Update' : 'Add New'} Category
-      </button>
+      <SubmitButton edit={edit} title={'Category'} />
     </form>
   )
 }

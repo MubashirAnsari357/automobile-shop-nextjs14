@@ -3,6 +3,7 @@ import { HoverPlayIcon } from "./icons";
 import Link from "next/link";
 
 export default function ProductCard({
+  id,
   photo,
   name,
   category,
@@ -15,18 +16,23 @@ export default function ProductCard({
       href={""}
       className="mb-10 mt-4 mx-auto flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md"
     >
-      <div className="relative flex h-60 overflow-hidden rounded-t-lg">
+      <Link
+        href={`/products/${id}`}
+        className="relative flex h-60 overflow-hidden rounded-t-lg"
+      >
         <Image
           className="peer absolute top-0 right-0 h-full w-full object-cover group-hover:origin-center group-hover:scale-125 transition duration-500"
           fill={true}
           src={photo}
           alt="product image"
         />
-      </div>
+      </Link>
       <div className="mt-4 px-5 pb-5">
-        <h5 className="text-xl font-bold tracking-tight text-slate-900 truncate">
-          {name}
-        </h5>
+        <Link href={`/products/${id}`}>
+          <h5 className="text-xl font-bold tracking-tight text-slate-900 truncate">
+            {name}
+          </h5>
+        </Link>
         <p className="truncate text-slate-900">{description}</p>
 
         <div className="mt-2 mb-5 flex items-center justify-between">

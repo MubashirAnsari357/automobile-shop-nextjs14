@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import { AddIcon } from "./icons";
 import Image from "next/image";
 import { updateAbout } from "@/lib/Actions/actions";
+import SubmitButton from "./SubmitButton";
 
 const AboutForm = ({edit, about, id}) => {
   const [file, setFile] = useState(about?.photo?.url || null);
@@ -89,10 +89,7 @@ const AboutForm = ({edit, about, id}) => {
           />
         </div>
       </div>
-      <button type="submit" className="primary-btn w-full">
-        <AddIcon className="me-1 -ms-1 w-5 h-5" />
-        Update About
-      </button>
+      <SubmitButton edit={edit} title={'About'} />
     </form>
   );
 };

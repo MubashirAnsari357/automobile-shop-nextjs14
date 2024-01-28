@@ -1,4 +1,5 @@
 "use server";
+
 import { revalidatePath } from "next/cache";
 import Category from "../Models/Category";
 import Product from "../Models/Product";
@@ -23,19 +24,19 @@ export const addProduct = async (formData) => {
     urls.push(path);
   }
   // try {
-    const product = await Product.create({
-      name,
-      category,
-      subcategory,
-      manufactureDate: date,
-      description,
-      photos: urls,
-    });
+  const product = await Product.create({
+    name,
+    category,
+    subcategory,
+    manufactureDate: date,
+    description,
+    photos: urls,
+  });
 
-    if (product) {
-      revalidatePath("/admin/products");
-      redirect("/admin/products");
-    }
+  if (product) {
+    revalidatePath("/", "layout");
+    redirect("/admin/products");
+  }
   // } catch (error) {
   //   console.log("error", error);
   // }
@@ -49,7 +50,7 @@ export const addCategory = async (formData) => {
     name,
   });
   if (category) {
-    revalidatePath("/admin/categories");
+    revalidatePath("/", "layout");
     redirect("/admin/categories");
   }
   // } catch (error) {
@@ -65,7 +66,7 @@ export const addSubCategory = async (formData) => {
     name,
     category,
   });
-  revalidatePath("/admin/subcategories");
+  revalidatePath("/", "layout");
   redirect("/admin/subcategories");
   // } catch (error) {
   //   console.log("error", error);
@@ -88,7 +89,7 @@ export const addAbout = async (formData) => {
       },
     });
     if (about) {
-      revalidatePath("/admin/about");
+      revalidatePath("/", "layout");
       return true;
     }
   } catch (error) {
@@ -125,7 +126,7 @@ export const updateAbout = async (id, formData) => {
   const updatedWebData = await webData.save();
 
   if (updatedWebData) {
-    revalidatePath("/admin/about");
+    revalidatePath("/", "layout");
     redirect("/admin/about");
   }
   // } catch (error) {
@@ -134,8 +135,7 @@ export const updateAbout = async (id, formData) => {
 };
 
 export const updateHome = async (id, formData) => {
-  const { photo, title } =
-    Object.fromEntries(formData);
+  const { photo, title } = Object.fromEntries(formData);
 
   // try {
   connectToDb();
@@ -160,7 +160,7 @@ export const updateHome = async (id, formData) => {
   const updatedWebData = await webData.save();
 
   if (updatedWebData) {
-    revalidatePath("/admin/dashboard");
+    revalidatePath("/", "layout");
     redirect("/admin/dashboard");
   }
   // } catch (error) {
@@ -206,7 +206,7 @@ export const updateContact = async (id, formData) => {
   const updatedWebData = await webData.save();
 
   if (updatedWebData) {
-    revalidatePath("/admin/contact");
+    revalidatePath("/", "layout");
     redirect("/admin/contact");
   }
   // } catch (error) {
@@ -229,7 +229,7 @@ export const updateSubcategory = async (id, formData) => {
   subcategory.name = name;
   const updatedSubcategory = await subcategory.save();
   if (updatedSubcategory) {
-    revalidatePath("/admin/subcategories");
+    revalidatePath("/", "layout");
     redirect("/admin/subcategories");
   }
   // } catch (error) {
@@ -272,7 +272,7 @@ export const updateProduct = async (id, formData) => {
   product.photos = urls.length > 0 ? urls : product.photos;
   const updatedProduct = await product.save();
   if (updatedProduct) {
-    revalidatePath("/admin/products");
+    revalidatePath("/", "layout");
     redirect("/admin/products");
   }
   // } catch (error) {
@@ -294,7 +294,7 @@ export const updateCategory = async (id, formData) => {
   category.name = name;
   const updatedCategory = await category.save();
   if (updatedCategory) {
-    revalidatePath("/admin/categories");
+    revalidatePath("/", "layout");
     redirect("/admin/categories");
   }
   // } catch (error) {

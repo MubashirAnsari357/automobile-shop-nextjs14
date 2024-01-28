@@ -42,7 +42,7 @@ const Footer = async () => {
         </ul>
 
         <ul className="mt-8 flex justify-center gap-6 md:gap-8">
-          {Object.entries(webData?.contact?.social).map(([platform, link]) => (
+          {Object?.entries(webData?.contact?.social).map(([platform, link]) => (
             <li key={platform}>
               <Link
                 href={link}

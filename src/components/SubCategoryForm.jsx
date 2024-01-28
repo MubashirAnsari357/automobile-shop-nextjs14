@@ -1,6 +1,6 @@
 import React from "react";
-import { AddIcon } from "./icons";
 import { addSubCategory, updateSubcategory } from "@/lib/Actions/actions";
+import SubmitButton from "./SubmitButton";
 
 const SubCategoryForm = ({ categories, subcategory, edit }) => {
   const handleEdit = updateSubcategory.bind(null, subcategory?._id)
@@ -39,10 +39,7 @@ const SubCategoryForm = ({ categories, subcategory, edit }) => {
           />
         </div>
       </div>
-      <button type="submit" className="primary-btn w-full">
-        <AddIcon className="me-1 -ms-1 w-5 h-5" />
-        {edit ? 'Update' : 'Add New'} Subcategory
-      </button>
+      <SubmitButton edit={edit} title={'Subcategory'} />
     </form>
   );
 };

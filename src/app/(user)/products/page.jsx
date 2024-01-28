@@ -35,6 +35,7 @@ const Products = async ({ searchParams }) => {
           {productsData.products.map((product) => (
             <ProductCard
               key={product._id}
+              id={product._id}
               photo={product.photos[0].url}
               name={product.name}
               description={product.description}
