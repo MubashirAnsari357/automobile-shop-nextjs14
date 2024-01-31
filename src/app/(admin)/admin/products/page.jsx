@@ -1,18 +1,19 @@
 import PageNavigation from "@/components/PageNavigation";
 import ShowPerPage from "@/components/ShowPerPage";
-import { DeleteIcon, EditIcon } from "@/components/icons";
-import { getProducts} from "@/lib/Data/data";
+import { EditIcon } from "@/components/icons";
+import { getProducts } from "@/lib/Data/data";
 import { formatDateToIndian } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Search from "@/components/Search";
+import DeleteModal from "@/components/DeleteModal";
 
 const Products = async ({ searchParams }) => {
   const search = searchParams.q ?? "";
   const currentPage = Number(searchParams?.page) || 1;
   const pagesPerView = Number(searchParams?.limit) || 10;
-  const productsData = await getProducts(search, pagesPerView, currentPage);
+  const { products, pagination } = await getProducts(search, pagesPerView, currentPage);
 
   return (
     <section className="items-center lg:flex font-poppins">
@@ -52,7 +53,7 @@ const Products = async ({ searchParams }) => {
                 </tr>
               </thead>
               <tbody>
-                {productsData?.products?.map((product, index) => {
+                {products?.map((product, index) => {
                   const absoluteIndex =
                     (currentPage - 1) * pagesPerView + index + 1;
                   return (
@@ -61,41 +62,52 @@ const Products = async ({ searchParams }) => {
                         {absoluteIndex}
                       </td>
                       <td className="px-6 py-3 text-sm font-medium">
-                        {product.name}
+                        {product?.name}
                       </td>
                       <td className="px-6 py-3 text-sm font-medium">
                         {" "}
                         <Image
                           height={"100"}
                           width={"100"}
-                          src={product.photos[0]?.url}
-                          alt={product.name}
+                          src={product?.photos[0]?.url}
+                          alt={product?.name}
                           className="md:w-16 md:h-16 h-10 w-10 object-cover rounded-lg"
                         />
                       </td>
                       <td className="px-6 py-3 text-sm font-medium">
-                        {product.category?.name}
+                        {product?.category?.name}
                       </td>
                       <td className="px-6 py-3 text-sm font-medium">
-                        {product.subcategory?.name}
+                        {product?.subcategory?.name}
                       </td>
                       <td className="px-6 py-3 text-sm font-medium">
-                        {formatDateToIndian(product.manufactureDate)}
+                        {formatDateToIndian(product?.manufactureDate)}
                       </td>
                       <td className="items-center px-6 py-6 md:py-10 gap-2 flex-1 flex">
-                        <Link href={`/admin/products/${product._id}/edit`} className="font-medium">
+                        <Link
+                          href={`/admin/products/${product?._id}/edit`}
+                          className="font-medium"
+                        >
                           <EditIcon className="w-4 h-4 text-blue-600 hover:text-blue-500 dark:hover:text-gray-300 dark:text-blue-300 bi bi-pencil-square" />
                         </Link>
-                        <Link href="#" className="font-medium">
-                          <DeleteIcon className="w-4 h-4 text-red-600 hover:text-red-500 dark:hover:text-red-300 dark:text-red-400 bi bi-trash-fill" />
-                        </Link>
+                        <DeleteModal
+                          id={product?._id}
+                          message={
+                            "Are you sure you want to delete? This action will permanently delete the selected product. This cannot be undone"
+                          }
+                          type={"product"}
+                        />
                       </td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
-            <PageNavigation totalPages={productsData.pagination.totalPages} />
+            <PageNavigation
+              totalPages={pagination?.totalPages}
+              totalEntries={pagination?.total}
+              itemsPerPage={pagesPerView}
+            />
           </div>
         </div>
       </div>

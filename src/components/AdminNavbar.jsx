@@ -12,6 +12,7 @@ import {
 } from "./icons";
 import SidebarLinks from "./SidebarLinks";
 import Link from "next/link";
+import AdminDropdown from "./AdminDropdown";
 
 export default function AdminNavbar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -87,62 +88,7 @@ export default function AdminNavbar() {
                     />
                   </button>
                 </div>
-                <div
-                  className={`z-50 absolute right-5 top-8 ${
-                    isUserDropdownOpen ? "block" : "hidden"
-                  } my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow`}
-                  id="dropdown-user"
-                >
-                  <div className="px-4 py-3" role="none">
-                    <p className="text-sm text-gray-900" role="none">
-                      Admin
-                    </p>
-                    <p
-                      className="text-sm font-medium text-gray-900 truncate"
-                      role="none"
-                    >
-                      testing@test.com
-                    </p>
-                  </div>
-                  <ul className="py-1" role="none">
-                    <li>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                        role="menuitem"
-                      >
-                        Dashboard
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                        role="menuitem"
-                      >
-                        Settings
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                        role="menuitem"
-                      >
-                        Earnings
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                        role="menuitem"
-                      >
-                        Sign out
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+                <AdminDropdown isUserDropdownOpen={isUserDropdownOpen} />
               </div>
             </div>
           </div>

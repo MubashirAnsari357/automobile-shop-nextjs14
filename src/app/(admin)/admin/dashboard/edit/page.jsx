@@ -11,7 +11,7 @@ const EditHome = async () => {
           <h3 className="text-lg font-semibold px-5 text-gray-900 ">
             Edit Home
           </h3>
-          <HomeForm edit={true} about={webData?.home} id={webData._id} />
+          <HomeForm edit={true} home={webData?.homepage} id={webData?._id} />
         </div>
       </div>
     </div>

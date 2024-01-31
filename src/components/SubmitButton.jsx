@@ -9,7 +9,7 @@ const SubmitButton = ({ edit, title }) => {
   const buttonText = isAdding ? "Adding" : (edit ? (pending ? "Updating" : "Update") : "Add");
 
   return (
-    <button type="submit" disabled={pending} className={`primary-btn w-full ${pending && 'bg-blue-900'}`}>
+    <button type="submit" disabled={pending} className={`primary-btn w-full ${pending && 'opacity-40 cursor-not-allowed'}`}>
       {!edit && <AddIcon className="me-1 -ms-1 w-5 h-5" />}
       {buttonText} {title}
     </button>

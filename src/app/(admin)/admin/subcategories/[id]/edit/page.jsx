@@ -3,7 +3,7 @@ import { getCategories, getSubcategoryById } from "@/lib/Data/data";
 import React from "react";
 
 const EditSubcategory = async ({ params: { id } }) => {
-  const categoriesData = await getCategories();
+  const { categories } = await getCategories();
   const subcategory = await getSubcategoryById(id);
   return (
     <div className="p-6 max-w-3xl w-full max-h-full mx-auto">
@@ -14,7 +14,7 @@ const EditSubcategory = async ({ params: { id } }) => {
           </h3>
           <SubCategoryForm
             edit={true}
-            categories={JSON.parse(JSON.stringify(categoriesData.categories))}
+            categories={JSON.parse(JSON.stringify(categories))}
             subcategory={subcategory}
           />
         </div>

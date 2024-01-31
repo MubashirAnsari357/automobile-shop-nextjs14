@@ -11,7 +11,7 @@ const EditContact = async () => {
           <h3 className="text-lg font-semibold px-5 text-gray-900 ">
             Edit Contact
           </h3>
-          <ContactForm edit={true} contact={webData.contact} id={webData._id} />
+          <ContactForm edit={true} contact={webData?.contact} id={webData?._id} />
         </div>
       </div>
     </div>

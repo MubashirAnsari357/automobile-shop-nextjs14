@@ -1,6 +1,7 @@
 import Category from "../Models/Category";
 import Product from "../Models/Product";
 import SubCategory from "../Models/SubCategory";
+import User from "../Models/User";
 import WebData from "../Models/WebData";
 import { connectToDb } from "../db";
 import { getPagination } from "../utils";
@@ -156,6 +157,21 @@ export const getProductyById = async (id) => {
     const product = await Product.findById(id).populate(["category", "subcategory"]);
     if (product) {
       return product;
+    }
+    else {
+      console.log("Not Found!")
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getUser = async (id) => {
+  try {
+    connectToDb();
+    const user = await User.findById(id);
+    if (user) {
+      return user;
     }
     else {
       console.log("Not Found!")

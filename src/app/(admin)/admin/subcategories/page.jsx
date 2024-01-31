@@ -1,3 +1,4 @@
+import DeleteModal from "@/components/DeleteModal";
 import PageNavigation from "@/components/PageNavigation";
 import Search from "@/components/Search";
 import ShowPerPage from "@/components/ShowPerPage";
@@ -6,11 +7,15 @@ import { getCategories, getSubCategories } from "@/lib/Data/data";
 import Link from "next/link";
 import React from "react";
 
-const SubCategories = async ({searchParams}) => {
+const SubCategories = async ({ searchParams }) => {
   const search = searchParams.q ?? "";
   const currentPage = Number(searchParams?.page) || 1;
   const pagesPerView = Number(searchParams?.limit) || 10;
-  const subcategoriesData = await getSubCategories(search, pagesPerView, currentPage);
+  const { subcategories, pagination } = await getSubCategories(
+    search,
+    pagesPerView,
+    currentPage
+  );
 
   return (
     <section className="items-center lg:flex font-poppins">
@@ -37,30 +42,41 @@ const SubCategories = async ({searchParams}) => {
                 </tr>
               </thead>
               <tbody>
-                {subcategoriesData.subcategories?.map((subcategory, index) => (
+                {subcategories?.map((subcategory, index) => (
                   <tr key={index} className="border-b border-gray-200">
                     <td className="px-6 py-3 text-sm font-medium">
                       {index + 1}
                     </td>
                     <td className="px-6 py-3 text-sm font-medium">
-                      {subcategory.name}
+                      {subcategory?.name}
                     </td>
                     <td className="px-6 py-3 text-sm font-medium">
-                      {subcategory.category.name}
+                      {subcategory?.category?.name}
                     </td>
                     <td className="items-center px-6 py-6 md:py-10 gap-2 flex-1 flex">
-                      <Link href={`/admin/subcategories/${subcategory._id}/edit`} className="font-medium">
+                      <Link
+                        href={`/admin/subcategories/${subcategory?._id}/edit`}
+                        className="font-medium"
+                      >
                         <EditIcon className="w-4 h-4 text-blue-600 hover:text-blue-500 dark:hover:text-gray-300 dark:text-blue-300 bi bi-pencil-square" />
                       </Link>
-                      <Link href="#" className="font-medium">
-                        <DeleteIcon className="w-4 h-4 text-red-600 hover:text-red-500 dark:hover:text-red-300 dark:text-red-400 bi bi-trash-fill" />
-                      </Link>
+                      <DeleteModal
+                        id={subcategory?._id}
+                        message={
+                          "Are you sure you want to delete? This action will permanently delete the selected subcategory, along with all associated products. This cannot be undone"
+                        }
+                        type={"subcategory"}
+                      />
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            <PageNavigation totalPages={subcategoriesData.pagination.totalPages}/>
+            <PageNavigation
+              totalPages={pagination.totalPages}
+              totalEntries={pagination.total}
+              itemsPerPage={pagesPerView}
+            />
           </div>
         </div>
       </div>

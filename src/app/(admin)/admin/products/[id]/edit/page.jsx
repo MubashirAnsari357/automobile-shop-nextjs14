@@ -8,8 +8,8 @@ import React from "react";
 
 const EditProduct = async ({ params: { id } }) => {
   const product = await getProductyById(id);
-  const categoriesData = await getCategories();
-  const subcategoriesData = await getSubCategories();
+  const { categories } = await getCategories();
+  const { subcategories } = await getSubCategories();
 
   return (
     <div className="p-6 max-w-3xl w-full max-h-full mx-auto">
@@ -21,8 +21,10 @@ const EditProduct = async ({ params: { id } }) => {
           <ProductForm
             edit={true}
             product={JSON.parse(JSON.stringify(product))}
-            categories={JSON.parse(JSON.stringify(categoriesData.categories))}
-            subcategories={JSON.parse(JSON.stringify(subcategoriesData.subcategories))}
+            categories={JSON.parse(JSON.stringify(categories))}
+            subcategories={JSON.parse(
+              JSON.stringify(subcategories)
+            )}
           />
         </div>
       </div>

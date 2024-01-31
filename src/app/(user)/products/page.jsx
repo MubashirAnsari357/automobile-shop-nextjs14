@@ -8,7 +8,11 @@ const Products = async ({ searchParams }) => {
   const search = searchParams.q ?? "";
   const currentPage = Number(searchParams?.page) || 1;
   const pagesPerView = Number(searchParams?.limit) || 10;
-  const productsData = await getProducts(search, pagesPerView, currentPage);
+  const { products, pagination } = await getProducts(
+    search,
+    pagesPerView,
+    currentPage
+  );
   return (
     <section className="">
       <div className="justify-center flex-1 mx-auto p-6">
@@ -32,20 +36,24 @@ const Products = async ({ searchParams }) => {
           </div>
         </div>
         <div className="flex justify-center items-center gap-x-8 flex-wrap">
-          {productsData.products.map((product) => (
+          {products.map((product) => (
             <ProductCard
-              key={product._id}
-              id={product._id}
-              photo={product.photos[0].url}
-              name={product.name}
-              description={product.description}
-              subcategory={product.subcategory.name}
-              manufactureDate={product.manufactureDate}
-              category={product.category.name}
+              key={product?._id}
+              id={product?._id}
+              photo={product?.photos[0]?.url}
+              name={product?.name}
+              description={product?.description}
+              subcategory={product?.subcategory?.name}
+              manufactureDate={product?.manufactureDate}
+              category={product?.category?.name}
             />
           ))}
         </div>
-        <PageNavigation totalPages={productsData.pagination.totalPages} />
+        <PageNavigation
+          totalPages={pagination?.totalPages}
+          totalEntries={pagination?.total}
+          itemsPerPage={pagesPerView}
+        />
       </div>
     </section>
   );

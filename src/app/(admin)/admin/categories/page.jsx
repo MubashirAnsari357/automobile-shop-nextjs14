@@ -5,12 +5,17 @@ import { getCategories } from "@/lib/Data/data";
 import Link from "next/link";
 import React from "react";
 import Search from "@/components/Search";
+import DeleteModal from "@/components/DeleteModal";
 
 const Categories = async ({ searchParams }) => {
   const search = searchParams.q ?? "";
   const currentPage = Number(searchParams?.page) || 1;
   const pagesPerView = Number(searchParams?.limit) || 10;
-  const categoriesData = await getCategories(search, pagesPerView, currentPage);
+  const { categories, pagination } = await getCategories(
+    search,
+    pagesPerView,
+    currentPage
+  );
   return (
     <section className="items-center lg:flex font-poppins">
       <div className="justify-center flex-1 max-w-6xl px-4 py-4 mx-auto lg:py-8 md:px-6">
@@ -35,7 +40,7 @@ const Categories = async ({ searchParams }) => {
                 </tr>
               </thead>
               <tbody>
-                {categoriesData.categories.map((category, index) => {
+                {categories?.map((category, index) => {
                   const absoluteIndex =
                     (currentPage - 1) * pagesPerView + index + 1;
                   return (
@@ -44,22 +49,33 @@ const Categories = async ({ searchParams }) => {
                         {absoluteIndex}
                       </td>
                       <td className="px-6 py-3 text-sm font-medium">
-                        {category.name}
+                        {category?.name}
                       </td>
                       <td className="items-center px-6 py-6 md:py-10 gap-2 flex-1 flex">
-                        <Link href={`/admin/categories/${category._id}/edit`} className="font-medium">
+                        <Link
+                          href={`/admin/categories/${category?._id}/edit`}
+                          className="font-medium"
+                        >
                           <EditIcon className="w-4 h-4 text-blue-600 hover:text-blue-500 dark:hover:text-gray-300 dark:text-blue-300 bi bi-pencil-square" />
                         </Link>
-                        <Link href="#" className="font-medium">
-                          <DeleteIcon className="w-4 h-4 text-red-600 hover:text-red-500 dark:hover:text-red-300 dark:text-red-400 bi bi-trash-fill" />
-                        </Link>
+                        <DeleteModal
+                          id={category?._id}
+                          message={
+                            "Are you sure you want to delete? This action will permanently delete the selected category, along with all associated subcategories and products. This cannot be undone"
+                          }
+                          type={"category"}
+                        />
                       </td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
-            <PageNavigation totalPages={categoriesData.pagination.totalPages} />
+            <PageNavigation
+              totalPages={pagination?.totalPages}
+              totalEntries={pagination?.total}
+              itemsPerPage={pagesPerView}
+            />
           </div>
         </div>
       </div>

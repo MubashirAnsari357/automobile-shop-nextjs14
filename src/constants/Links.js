@@ -51,3 +51,14 @@ export const AdminLinks = [
     icon: <ContactIcon />,
   },
 ];
+
+export const AdminDropdownLinks = [
+  {
+    title: "Dashboard",
+    path: "/admin/dashboard",
+  },
+  {
+    title: "Profile",
+    path: "/admin/profile",
+  },
+];

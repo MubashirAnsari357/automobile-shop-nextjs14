@@ -1,6 +1,7 @@
 import { Arvo } from "next/font/google";
 import "@/app/globals.css";
 import AdminNavbar from "@/components/AdminNavbar";
+import ToastProvider from "@/components/ToastProvider";
 const arvo = Arvo({ subsets: ["latin"], weight: ["400", "700"] });
 
 export const metadata = {
@@ -18,6 +19,7 @@ export default function RootLayout({ children }) {
             {children}
           </div>
         </main>
+        <ToastProvider />
       </body>
     </html>
   );

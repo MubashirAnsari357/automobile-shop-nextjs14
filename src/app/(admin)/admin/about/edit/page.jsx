@@ -11,7 +11,7 @@ const EditAbout = async () => {
           <h3 className="text-lg font-semibold px-5 text-gray-900 ">
             Edit About
           </h3>
-          <AboutForm edit={true} about={webData.about} id={webData._id} />
+          <AboutForm edit={true} about={webData?.about} id={webData?._id} />
         </div>
       </div>
     </div>
