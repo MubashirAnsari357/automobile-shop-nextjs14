@@ -42,7 +42,8 @@ export const addProduct = async (formData) => {
       revalidatePath("/", "layout");
     }
   } catch (error) {
-    console.log("error", error);
+    console.error("An error occurred:", error);
+  console.error("Stack trace:", error.stack);
   } finally {
     if (success) {
       redirect("/admin/products");

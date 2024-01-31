@@ -19,6 +19,8 @@ export const uploadFiles = async (photo) => {
         function (error, result) {
           if (error) {
             reject(error);
+            console.error(error)
+            throw new Error(error)
             return;
           }
           resolve({

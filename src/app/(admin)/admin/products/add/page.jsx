@@ -5,6 +5,7 @@ import React from "react";
 const AddProduct = async () => {
   const { categories } = await getCategories();
   const { subcategories } = await getSubCategories();
+  console.log(subcategories)
   return (
     <div className="p-6 max-w-3xl w-full max-h-full mx-auto">
       <div className="bg-white rounded-lg shadow-xl">
