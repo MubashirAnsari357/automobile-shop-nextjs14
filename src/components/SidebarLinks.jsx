@@ -1,11 +1,16 @@
+"use client"
 import { usePathname } from "next/navigation";
 import React from "react";
 import { SignOutIcon } from "./icons";
 import Link from "next/link";
 import { AdminLinks } from "@/constants/Links";
+import { logout } from "@/lib/Actions/actions";
+import { useFormStatus } from "react-dom";
 
 const SidebarLinks = () => {
   const pathname = usePathname();
+  const { pending } = useFormStatus();
+
   return (
     <ul className="space-y-2 font-medium">
       {AdminLinks.map((link) => (
@@ -28,13 +33,18 @@ const SidebarLinks = () => {
         </li>
       ))}
       <li>
-        <Link
-          href="#"
-          className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group"
-        >
-          <SignOutIcon className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 hover:font-semibold" />
-          <span className="flex-1 ms-3 whitespace-nowrap">Sign Out</span>
-        </Link>
+        <form action={logout} className="w-full">
+          <button
+            disabled={pending}
+            type="submit"
+            className="flex items-center p-2 text-red-600 rounded-lg hover:bg-red-50 group"
+          >
+            <SignOutIcon className="flex-shrink-0 w-5 h-5 text-red-600 transition duration-75 group-hover:text-red-600 hover:font-semibold" />
+            <span className="flex-1 ms-3 whitespace-nowrap">
+              {pending ? "Signing out..." : "Sign Out"}
+            </span>
+          </button>
+        </form>
       </li>
       {/* Inbox */}
       {/* <li>

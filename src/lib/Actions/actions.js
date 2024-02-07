@@ -1,5 +1,4 @@
 "use server";
-
 import { revalidatePath } from "next/cache";
 import Category from "../Models/Category";
 import Product from "../Models/Product";
@@ -10,6 +9,7 @@ import WebData from "../Models/WebData";
 import { redirect } from "next/navigation";
 import User from "../Models/User";
 import mongoose from "mongoose";
+import { signIn, signOut } from "@/auth";
 
 export const addProduct = async (formData) => {
   const allPhotos = Array.from(formData.entries())
@@ -43,7 +43,7 @@ export const addProduct = async (formData) => {
     }
   } catch (error) {
     console.error("An error occurred:", error);
-  console.error("Stack trace:", error.stack);
+    console.error("Stack trace:", error.stack);
   } finally {
     if (success) {
       redirect("/admin/products");
@@ -542,4 +542,20 @@ export const deleteProduct = async (id, formData) => {
   } finally {
     session.endSession();
   }
+};
+
+export const authenticate = async (prevState, formData) => {
+  const { email, password } = Object.fromEntries(formData);
+  try {
+    await signIn("credentials", { email, password });
+  } catch (error) {
+    if (error.message.includes("CredentialsSignin")) {
+      return "Invalid Credentials!";
+    }
+    throw error;
+  }
+};
+
+export const logout = async () => {
+  await signOut();
 };

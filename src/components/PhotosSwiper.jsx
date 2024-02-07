@@ -11,40 +11,37 @@ import "swiper/css/thumbs";
 
 const PhotosSwiper = ({ photos }) => {
   return (
-    <Swiper
-      grabCursor={true}
-      effect={"creative"}
-      creativeEffect={{
-        prev: {
-          shadow: true,
-          translate: [0, 0, -400],
-        },
-        next: {
-          translate: ["100%", 0, 0],
-        },
-      }}
-      modules={[EffectCreative, Pagination]}
-      pagination={{
-        clickable: true,
-      }}
-    >
-      {photos?.map((photo, index) => (
-        <SwiperSlide
-          key={index}
-          className="flex justify-center items-center shadow-2xl shadow-slate-300 rounded-full"
-        >
-          <div className="w-[400px] h-[320px] bg-cover">
+    <div className="group relative bg-zinc-100 aspect-square overflow-hidden rounded-xl">
+      <Swiper
+        grabCursor={true}
+        effect={"creative"}
+        creativeEffect={{
+          prev: {
+            shadow: true,
+            translate: [0, 0, -400],
+          },
+          next: {
+            translate: ["100%", 0, 0],
+          },
+        }}
+        modules={[EffectCreative, Pagination]}
+        pagination={{
+          clickable: true,
+        }}
+        className="h-full w-full"
+      >
+        {photos?.map((photo, index) => (
+          <SwiperSlide key={index} className="relative h-full w-full">
             <Image
               fill
-            //   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="h-full w-full object-cover rounded-2xl"
+              className="h-full w-full object-cover object-center rounded-2xl"
               src={photo.url}
               alt="img"
             />
-          </div>
-        </SwiperSlide>
-      ))}
-    </Swiper>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
   );
 };
 

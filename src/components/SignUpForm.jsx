@@ -19,10 +19,6 @@ const SignUpForm = () => {
     }
   };
 
-  const handlePasswordVisibility = (e) => {
-    e.preventDefault();
-    setPasswordVisible(!passwordVisible);
-  };
   return (
     <form action={addUser} className="mt-6">
       <div className="mt-5">
@@ -62,8 +58,9 @@ const SignUpForm = () => {
               maxLength={16}
             />
             <button
+              type="button"
               className="absolute right-0 mr-3 "
-              onClick={handlePasswordVisibility}
+              onClick={() => setPasswordVisible(!passwordVisible)}
             >
               {passwordVisible ? (
                 <EyeIcon className={"w-5 h-5"} />
