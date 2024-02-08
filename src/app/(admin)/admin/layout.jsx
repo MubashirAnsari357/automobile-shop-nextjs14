@@ -17,9 +17,9 @@ export default function RootLayout({ children }) {
           <AdminNavbar />
           <div className="pt-16 md:pt-14 md:ml-64 bg-gray-50 min-h-screen">
             {children}
+            <ToastProvider />
           </div>
         </main>
-        <ToastProvider />
       </body>
     </html>
   );

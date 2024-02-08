@@ -61,4 +61,8 @@ export const AdminDropdownLinks = [
     title: "Profile",
     path: "/admin/profile",
   },
+  {
+    title: "Change Password",
+    path: "/admin/change-password",
+  },
 ];

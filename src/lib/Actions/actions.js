@@ -10,6 +10,7 @@ import { redirect } from "next/navigation";
 import User from "../Models/User";
 import mongoose from "mongoose";
 import { signIn, signOut } from "@/auth";
+import bcrypt from "bcrypt";
 
 export const addProduct = async (formData) => {
   const allPhotos = Array.from(formData.entries())
@@ -389,11 +390,14 @@ export const addUser = async (formData) => {
 
 export const updateUser = async (id, formData) => {
   const { name, email, photo } = Object.fromEntries(formData);
-  let success = false;
   try {
     connectToDb();
 
     const user = await User.findById(id);
+
+    if(!user){
+      return { success: false, message: "Invalid User!" }
+    }
 
     let newPath;
     if (photo && photo.size > 0) {
@@ -408,10 +412,10 @@ export const updateUser = async (id, formData) => {
     user.photo = newPath || user.photo;
     const updatedUser = await user.save();
     if (updatedUser) {
-      success = true;
       revalidatePath("/", "layout");
+      return { success: true, message: "Profile updated successfully!" }
     } else {
-      console.log("Error");
+      return { success: false, message: "Failed to update profile" };
     }
   } catch (error) {
     console.log("error", error);
@@ -559,3 +563,44 @@ export const authenticate = async (prevState, formData) => {
 export const logout = async () => {
   await signOut();
 };
+
+export const updatePassword = async (formData) => {
+  const { email, oldPassword, newPassword, cnewPassword } =
+    Object.fromEntries(formData);
+  if (newPassword !== cnewPassword) {
+    return { success: false, message: "New passwords do not match!" };
+  }
+  try {
+    connectToDb();
+    const user = await User.findOne({ email: email }).select("+password");
+    if (user) {
+      const isMatch = await bcrypt.compare(oldPassword, user.password);
+      if (isMatch) {
+        user.password = newPassword;
+        const updatedUser = await user.save();
+        if (updatedUser) {
+          return {
+            success: true,
+            message: "Password Updated Successfully! Login with new password",
+          };
+        }
+      } else {
+        return { success: false, message: "Old password is incorrect!" };
+      }
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getUserById = async (userId) => {
+  try {
+    connectToDb();
+    const user = await User.findById(userId);
+    if (user) {
+      return user;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
