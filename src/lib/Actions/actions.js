@@ -164,7 +164,7 @@ export const updateAbout = async (id, formData) => {
   }
 };
 
-export const updateHome = async (id, formData) => {
+export const updateHome = async (id, products, formData) => {
   const { photo, title } = Object.fromEntries(formData);
   let success = false;
   try {
@@ -190,6 +190,7 @@ export const updateHome = async (id, formData) => {
 
     webData.homepage.photo = newPath || webData.homepage.photo;
     webData.homepage.overlayText = title;
+    webData.homepage.products = products;
 
     const updatedWebData = await webData.save();
 

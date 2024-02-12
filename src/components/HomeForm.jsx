@@ -9,19 +9,7 @@ import makeAnimated from "react-select/animated";
 const animatedComponents = makeAnimated();
 
 const HomeForm = ({ edit, home, id, products }) => {
-  const [file, setFile] = useState(home?.photo?.url || null);
-
-  const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
-
-    if (selectedFile) {
-      setFile(URL.createObjectURL(selectedFile));
-    }
-  };
-
-  const handleEdit = updateHome.bind(null, id);
-
-  const options = products.map((product, index) => {
+  const options = products.map((product) => {
     return {
       label: (
         <div className="flex items-center">
@@ -39,9 +27,52 @@ const HomeForm = ({ edit, home, id, products }) => {
         </div>
       ),
       value: product._id,
-
     };
   });
+
+  const [file, setFile] = useState(home?.photo?.url || null);
+  const [selectedProducts, setSelectedProducts] = useState(
+    home?.products
+      ? options.filter((option) =>
+          home.products.map((product) => product._id).includes(option.value)
+        )
+      : []
+  );
+  const [selectedProductsIds, setSelectedProductsIds] = useState(
+    home?.products?.map((product) => product._id) || []
+  );
+
+  console.log(selectedProductsIds);
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+
+    if (selectedFile) {
+      setFile(URL.createObjectURL(selectedFile));
+    }
+  };
+
+  const handleEdit = async (formData) => {
+    const response = await updateHome(id, selectedProductsIds, formData);
+    console.log(response);
+  };
+
+  const filterOptions = (candidate, inputValue) => {
+    if (inputValue) {
+      const productName =
+        candidate.label.props.children[1].props.children[0].props.children;
+      return productName.toLowerCase().includes(inputValue.toLowerCase());
+    }
+    return true;
+  };
+
+  const handleSelect = (selectedOptions) => {
+    const selectedIds = selectedOptions.map((option) => option.value);
+
+    setSelectedProducts(selectedOptions);
+
+    setSelectedProductsIds(selectedIds);
+  };
 
   return (
     <form action={handleEdit} className="p-4 md:p-5">
@@ -65,10 +96,14 @@ const HomeForm = ({ edit, home, id, products }) => {
             Products
           </label>
           <Select
+            name="products"
+            onChange={handleSelect}
+            defaultValue={selectedProducts}
             options={options}
             isMulti={true}
             components={animatedComponents}
             closeMenuOnSelect={false}
+            filterOption={filterOptions}
           />
         </div>
         <div className="col-span-2">

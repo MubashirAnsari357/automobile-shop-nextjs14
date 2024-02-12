@@ -114,7 +114,7 @@ export const getSubCategories = async (query, limit, page) => {
 export const getWebData = async () => {
   try {
     connectToDb();
-    const webData = await WebData.findOne();
+    const webData = await WebData.findOne().populate({ path: "homepage", populate: { path: "products" } });
     return webData;
   } catch (error) {
     console.log(error);

@@ -14,7 +14,7 @@ const EditHome = async () => {
           </h3>
           <HomeForm
             edit={true}
-            home={webData?.homepage}
+            home={JSON.parse(JSON.stringify(webData?.homepage))}
             id={webData?._id}
             products={JSON.parse(JSON.stringify(products))}
           />
