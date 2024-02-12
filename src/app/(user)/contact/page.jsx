@@ -91,6 +91,7 @@ const Contact = async () => {
       </div>
       <Map link={webData?.contact?.map} />
     </section>
+    
   );
 };
 

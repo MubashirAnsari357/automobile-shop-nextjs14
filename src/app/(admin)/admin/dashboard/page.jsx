@@ -1,6 +1,9 @@
+import Hero from "@/components/Hero";
+import { getWebData } from "@/lib/Data/data";
 import Link from "next/link";
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const webData = await getWebData();
   return (
     <section className="items-center lg:flex font-poppins">
       <div className="justify-center flex-1 max-w-6xl px-4 py-4 mx-auto lg:py-8 md:px-6">
@@ -11,6 +14,7 @@ export default function Dashboard() {
               Edit Home
             </Link>
           </div>
+          <Hero image={webData?.homepage?.photo?.url} overlayText={webData?.homepage?.overlayText} />
         </div>
       </div>
     </section>

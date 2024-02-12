@@ -3,8 +3,12 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { updateHome } from "@/lib/Actions/actions";
 import SubmitButton from "./SubmitButton";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
 
-const HomeForm = ({edit, home, id}) => {
+const animatedComponents = makeAnimated();
+
+const HomeForm = ({ edit, home, id, products }) => {
   const [file, setFile] = useState(home?.photo?.url || null);
 
   const handleFileChange = (event) => {
@@ -17,6 +21,28 @@ const HomeForm = ({edit, home, id}) => {
 
   const handleEdit = updateHome.bind(null, id);
 
+  const options = products.map((product, index) => {
+    return {
+      label: (
+        <div className="flex items-center">
+          <div className="relative w-12 h-12 bg-contain overflow-hidden rounded-lg">
+            <Image src={product.photos[0].url} fill alt={product.name} />
+          </div>
+          <div className="ml-2">
+            <p className="text-sm font-medium text-gray-900 truncate">
+              {product.name}
+            </p>
+            <p className="text-sm text-gray-500 truncate">
+              {product.category.name}
+            </p>
+          </div>
+        </div>
+      ),
+      value: product._id,
+
+    };
+  });
+
   return (
     <form action={handleEdit} className="p-4 md:p-5">
       <div className="grid gap-4 mb-4 grid-cols-2">
@@ -28,10 +54,21 @@ const HomeForm = ({edit, home, id}) => {
             type="text"
             name="title"
             id="title"
-            defaultValue={home?.overlayText || ''}
+            defaultValue={home?.overlayText || ""}
             className="formInput"
             placeholder="Text to be shown over image"
             required
+          />
+        </div>
+        <div className="col-span-2">
+          <label htmlFor="title" className="formLabel">
+            Products
+          </label>
+          <Select
+            options={options}
+            isMulti={true}
+            components={animatedComponents}
+            closeMenuOnSelect={false}
           />
         </div>
         <div className="col-span-2">
@@ -41,7 +78,7 @@ const HomeForm = ({edit, home, id}) => {
                 width={"80"}
                 height={"80"}
                 src={file || URL.createObjectURL(file)}
-                alt={file?.name || ''}
+                alt={file?.name || ""}
                 className="h-20 w-20 object-cover mb-2 rounded-md cursor-pointer"
               />
             )}
@@ -63,7 +100,7 @@ const HomeForm = ({edit, home, id}) => {
           />
         </div>
       </div>
-      <SubmitButton edit={edit} title={'Home'} />
+      <SubmitButton edit={edit} title={"Home"} />
     </form>
   );
 };

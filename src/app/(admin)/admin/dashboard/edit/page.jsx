@@ -1,9 +1,10 @@
 import HomeForm from "@/components/HomeForm";
-import { getWebData } from "@/lib/Data/data";
+import { getProducts, getWebData } from "@/lib/Data/data";
 import React from "react";
 
 const EditHome = async () => {
   const webData = await getWebData();
+  const { products } = await getProducts();
   return (
     <div className="p-6 max-w-3xl w-full max-h-full mx-auto">
       <div className="bg-white rounded-lg shadow-xl">
@@ -11,7 +12,12 @@ const EditHome = async () => {
           <h3 className="text-lg font-semibold px-5 text-gray-900 ">
             Edit Home
           </h3>
-          <HomeForm edit={true} home={webData?.homepage} id={webData?._id} />
+          <HomeForm
+            edit={true}
+            home={webData?.homepage}
+            id={webData?._id}
+            products={JSON.parse(JSON.stringify(products))}
+          />
         </div>
       </div>
     </div>

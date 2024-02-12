@@ -21,7 +21,7 @@ export default function ProductCard({
         className="relative flex h-60 overflow-hidden rounded-t-lg"
       >
         <Image
-          className="peer absolute top-0 right-0 h-full w-full object-cover group-hover:origin-center group-hover:scale-125 transition duration-500"
+          className="peer absolute top-0 right-0 h-full w-full object-cover hover:origin-center hover:scale-125 transition duration-500"
           fill={true}
           src={photo}
           alt="product image"
@@ -49,3 +49,4 @@ export default function ProductCard({
     </div>
   );
 }
+

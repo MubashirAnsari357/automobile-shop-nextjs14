@@ -30,6 +30,12 @@ const WebDataSchema = new mongoose.Schema({
       url: String,
     },
     overlayText: String,
+    products: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
+      }
+    ]
   }
 }, {timestamps: true});
 
