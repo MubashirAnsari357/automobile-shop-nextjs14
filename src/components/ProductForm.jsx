@@ -4,25 +4,49 @@ import Image from "next/image";
 import { addProduct, updateProduct } from "@/lib/Actions/actions";
 import { formatDateToISO } from "@/lib/utils";
 import SubmitButton from "./SubmitButton";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
+
+const animatedComponents = makeAnimated();
 
 const ProductForm = ({ edit, product, categories, subcategories }) => {
   const [files, setFiles] = useState(product?.photos || []);
 
-  const [selectedCategory, setSelectedCategory] = useState(product?.category?._id || "");
+  const [selectedCategory, setSelectedCategory] = useState({
+    label: product?.category?.name,
+    value: product?.category?._id,
+  });
   const [subCategories, setSubCategories] = useState(null);
-  const [selectedSubCategory, setSelectedSubCategory] = useState(product?.subcategory?._id || "");
+  const [selectedSubCategory, setSelectedSubCategory] = useState({
+    label: product?.subcategory?.name,
+    value: product?.subcategory?._id,
+  });
 
   useEffect(() => {
     setSubCategories(
       subcategories.filter(
-        (subcategory) => subcategory.category._id === selectedCategory
+        (subcategory) => subcategory.category._id === selectedCategory?.value
       )
     );
   }, [subcategories, selectedCategory]);
 
+  const categoryOptions = categories?.map((category, index) => {
+    return {
+      label: category?.name,
+      value: category?._id,
+    };
+  });
 
-  const handleSelect = (event) => {
-    setSelectedCategory(event.target.value);
+  const subcategoryOptions = subCategories?.map((subcategory, index) => {
+    return {
+      label: subcategory?.name,
+      value: subcategory?._id,
+    };
+  });
+
+  const handleSelect = (selectedOption) => {
+    setSelectedCategory(selectedOption);
+    setSelectedSubCategory("");
   };
 
   const handleEdit = updateProduct.bind(null, product?._id);
@@ -58,40 +82,27 @@ const ProductForm = ({ edit, product, categories, subcategories }) => {
           <label htmlFor="category" className="formLabel">
             Category
           </label>
-          <select
-            id="category"
-            className="formInput"
+          <Select
             name="category"
+            defaultValue={edit && selectedCategory}
+            options={categoryOptions}
+            components={animatedComponents}
             onChange={handleSelect}
-            defaultValue={product?.category?._id || ""}
             required
-          >
-            {categories.map((category, index) => (
-              <option key={category._id} value={category._id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
+          />
         </div>
         <div className="col-span-2 sm:col-span-1">
           <label htmlFor="subcategory" className="formLabel">
             Model
           </label>
-          <select
-            id="subcategory"
-            className="formInput"
+          <Select
             name="subcategory"
-            disabled={!selectedCategory}
-            value={selectedSubCategory || ""}
-            onChange={(e) => setSelectedSubCategory(e.target.value)}
+            value={edit && selectedSubCategory}
+            onChange={(selectedOption) => setSelectedSubCategory(selectedOption)}
+            options={subcategoryOptions}
+            components={animatedComponents}
             required
-          >
-            {subCategories?.map((subcategory, index) => (
-            <option key={subcategory?._id} value={subcategory?._id}>
-              {subcategory?.name}
-            </option>
-          ))}
-          </select>
+          />
         </div>
         <div className="col-span-2">
           <label htmlFor="name" className="formLabel">
@@ -104,7 +115,11 @@ const ProductForm = ({ edit, product, categories, subcategories }) => {
             className="formInput"
             placeholder="Select Manufacture Date"
             required
-            defaultValue={product?.manufactureDate ? formatDateToISO(product?.manufactureDate) : ""}
+            defaultValue={
+              product?.manufactureDate
+                ? formatDateToISO(product?.manufactureDate)
+                : ""
+            }
           />
         </div>
         <div className="col-span-2">
@@ -156,7 +171,7 @@ const ProductForm = ({ edit, product, categories, subcategories }) => {
           
         </div> */}
       </div>
-      <SubmitButton edit={edit} title={'Product'} />
+      <SubmitButton edit={edit} title={"Product"} />
     </form>
   );
 };

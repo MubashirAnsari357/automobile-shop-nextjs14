@@ -15,7 +15,7 @@ const EditSubcategory = async ({ params: { id } }) => {
           <SubCategoryForm
             edit={true}
             categories={JSON.parse(JSON.stringify(categories))}
-            subcategory={subcategory}
+            subcategory={JSON.parse(JSON.stringify(subcategory))}
           />
         </div>
       </div>
